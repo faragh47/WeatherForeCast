@@ -23,7 +23,7 @@ This project is a .NET 7 API client that fetches weather forecast data from the 
 
 ```bash
 git clone
-cd weather-forecast-api-client
+cd WeatherForecast
 ```
 
 ### 2. Run

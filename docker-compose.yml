@@ -1,0 +1,24 @@
+﻿services:
+  weatherforecast:
+    image: weatherforecast
+    build:
+      context: .
+      dockerfile: WeatherForecast/Dockerfile
+    depends_on:
+      - sql_server  
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080:80"
+  sql_server:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Kratos1024
+      - MSSQL_SA_PASSWORD=Kratos1024
+      - MSSQL_TCP_PORT=1433
+    ports:
+      - "1433:1433"  

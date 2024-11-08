@@ -22,7 +22,7 @@ This project is a .NET 7 API client that fetches weather forecast data from the 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/weather-forecast-api-client.git
+git clone
 cd weather-forecast-api-client
 ```
 

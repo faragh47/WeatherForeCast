@@ -22,19 +22,31 @@ public class WeatherForeCastService:IWeatherForeCastService
     }
     public async Task<string> GetFromDb()
     {
-        await _semaphoreSlim.WaitAsync(); 
-        var result = (await _applicationDbContext.ApiResponses.FirstOrDefaultAsync())?.RawResponse;
-        _semaphoreSlim.Release();
-        return result;
+        try
+        {
+            await _semaphoreSlim.WaitAsync(); 
+            var result = (await _applicationDbContext.ApiResponses.FirstOrDefaultAsync())?.RawResponse;
+            return result;
+        }
+        finally
+        {
+            _semaphoreSlim.Release();
+        }
     }
     public async Task<string> GetFromAPI() =>
         await _apiClientCoordinator.GetFromAPI(_apiClientFactory.GetFromApi, APIURL);
     public async Task<string> UpdateDBFromResponse(string response)
     {
-        await _semaphoreSlim.WaitAsync();
-        await updateDB(response);
-        _semaphoreSlim.Release();
-        return response;
+        try
+        {
+            await _semaphoreSlim.WaitAsync();
+            await updateDB(response);
+            return response;
+        }
+        finally
+        {
+            _semaphoreSlim.Release();
+        }
     }
 
     private async Task updateDB(string response)
